@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import { showCreateToast } from './Toast';
 
 const Create = () => {
 
@@ -20,7 +21,7 @@ const Create = () => {
             history('/read')
             setEmail("")
             setPassword("")
-            console.log("data sved");
+            showCreateToast("User Created Successfully")
         }
     }
 
