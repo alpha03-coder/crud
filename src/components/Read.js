@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { showDeleteToast } from './Toast';
+import { Link } from 'react-router-dom';
 
 
 
@@ -44,60 +45,68 @@ const Read = () => {
         }
     };
 
+    const  settoLocal=(id,email,password)=>{
+        localStorage.setItem("id",id)
+        localStorage.setItem("email",email)
+        localStorage.setItem("password",password)
+    }
+
 
 
     return (
         <>
 
-<div>
-      {loading ? (
-        <Box
-          sx={{ display: 'flex' }}
-          style={{
-            position: 'relative',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            top: '4rem',
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      ) : error ? (
-        <p>{error}</p>
-      ) : !data || data.length === 0 ? (
-        <p>No data available</p>
-      ) : (
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">S No.</th>
-              <th scope="col">Email</th>
-              <th scope="col">Password</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.email}</td>
-                <td>{item.password}</td>
-                <td>
-                  <button className="btn btn-success">Edit</button>
-                </td>
-                <td>
-                  <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+            <div>
+                {loading ? (
+                    <Box
+                        sx={{ display: 'flex' }}
+                        style={{
+                            position: 'relative',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            top: '4rem',
+                        }}
+                    >
+                        <CircularProgress />
+                    </Box>
+                ) : error ? (
+                    <p>{error}</p>
+                ) : !data || data.length === 0 ? (
+                    <p>No data available</p>
+                ) : (
+                    <table className="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">S No.</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((item) => (
+                                <tr key={item.id}>
+                                    <td>{item.id}</td>
+                                    <td>{item.email}</td>
+                                    <td>{item.password}</td>
+                                    <td>
+                                        <Link to="/update">
+                                        <button className="btn btn-success" onClick={()=>settoLocal(item.id,item.email,item.password)}>Edit</button>
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+            </div>
         </>
     )
 }
